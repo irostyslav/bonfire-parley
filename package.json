@@ -1,0 +1,29 @@
+{
+  "name": "bonfire-parley",
+  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/with-app-env.mjs vite dev --host 0.0.0.0 --port 8080",
+    "build": "node scripts/with-app-env.mjs vite build && npm run db:migrate",
+    "db:migrate": "node scripts/migrate.mjs",
+    "preview": "node scripts/with-app-env.mjs vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/react-router": "^1.170.0",
+    "@tanstack/react-start": "^1.168.0",
+    "lucide-react": "^0.510.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.3.0",
+    "three": "^0.186.0",
+    "zod": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/three": "^0.186.0",
+    "typescript": "^5.7.0",
+    "vite": "^8.2.0"
+  }
+}
