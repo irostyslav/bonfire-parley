@@ -9,24 +9,43 @@ export const Route = createRootRoute({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" },
+      {
+        name: "viewport",
+        content:
+          "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover",
+      },
       { title: APP_NAME },
-      { name: "description", content: "Walk a bleak snowbound country. Keep the fire. Speak when spoken to." },
+      {
+        name: "description",
+        content:
+          "Walk a bleak snowbound country. Keep the fire. Speak when spoken to. A slow dithered survival journey.",
+      },
       { name: "theme-color", content: "#0e0c0a" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
     ],
     links: [
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/__grok/manifest.webmanifest" },
       { rel: "apple-touch-icon", href: "/__grok/icon-180.png" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700&display=swap",
+      },
     ],
   }),
   component: () => (
     <html lang="en" suppressHydrationWarning>
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+      </head>
       <body>
         <PreviewHostBridge />
-        <AuthProvider><Outlet /></AuthProvider>
+        <AuthProvider>
+          <Outlet />
+        </AuthProvider>
         <Scripts />
       </body>
     </html>

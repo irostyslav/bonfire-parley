@@ -7,14 +7,35 @@
   --color-bone: #d8d0c0;
   --color-ember: #c45c32;
   --color-bg: #0e0c0a;
+  --color-surface: #1a1714;
   --color-fg: #d8d0c0;
   --color-muted: #7a7266;
+  --color-primary: #d8d0c0;
+  --color-border: #3a342c;
+  --radius: 0.75rem;
   --font-display: "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: "Cormorant Garamond", "Times New Roman", serif;
 }
 
 @layer base {
-  html, body, #app { height: 100%; background: var(--color-ink); color: var(--color-bone); }
-  html, body { overscroll-behavior: none; user-select: none; }
-  button:not(:disabled), [role="button"]:not(:disabled) { cursor: pointer; }
+  html,
+  body,
+  #app {
+    height: 100%;
+    background: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  html,
+  body {
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
+

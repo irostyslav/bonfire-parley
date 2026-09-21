@@ -2,5 +2,6 @@
   "title": "A Bonfire Parley",
   "type": "x:game",
   "card": "custom",
-  "color": "0e0c0a"
+  "color": "0e0c0a",
+  "description": "Walk a bleak snowbound country. Keep the fire. Speak when spoken to."
 }

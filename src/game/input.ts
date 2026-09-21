@@ -1,7 +1,17 @@
 const GAME_CODES = new Set([
-  "KeyW", "KeyA", "KeyS", "KeyD",
-  "ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight",
-  "Space", "KeyE", "KeyM", "Escape", "Enter",
+  "KeyW",
+  "KeyA",
+  "KeyS",
+  "KeyD",
+  "ArrowUp",
+  "ArrowLeft",
+  "ArrowDown",
+  "ArrowRight",
+  "Space",
+  "KeyE",
+  "KeyM",
+  "Escape",
+  "Enter",
 ]);
 
 function radialDeadzone(x: number, y: number, dz = 0.18) {
@@ -20,7 +30,6 @@ export class Input {
   muteQueued = false;
   private just = new Set<string>();
   private prev = new Set<string>();
-  private prevPadA = false;
 
   attach() {
     window.addEventListener("keydown", this.onDown);
@@ -41,17 +50,34 @@ export class Input {
     if (GAME_CODES.has(e.code)) e.preventDefault();
     this.keys.add(e.code);
   };
-  private onUp = (e: KeyboardEvent) => { this.keys.delete(e.code); };
-  private clear = () => { this.keys.clear(); this.touchX = 0; this.touchY = 0; };
-  private onVis = () => { if (document.hidden) this.clear(); };
+
+  private onUp = (e: KeyboardEvent) => {
+    this.keys.delete(e.code);
+  };
+
+  private clear = () => {
+    this.keys.clear();
+    this.touchX = 0;
+    this.touchY = 0;
+  };
+
+  private onVis = () => {
+    if (document.hidden) this.clear();
+  };
 
   setTouch(x: number, y: number) {
     const v = radialDeadzone(x, y, 0.12);
     this.touchX = v.x;
     this.touchY = v.y;
   }
-  queueInteract() { this.interactQueued = true; }
-  queueMute() { this.muteQueued = true; }
+
+  queueInteract() {
+    this.interactQueued = true;
+  }
+
+  queueMute() {
+    this.muteQueued = true;
+  }
 
   poll() {
     const src = this.injected ?? [...this.keys];
@@ -59,12 +85,15 @@ export class Input {
     this.just.clear();
     for (const c of now) if (!this.prev.has(c)) this.just.add(c);
     this.prev = now;
+
     let ax = this.touchX;
     let ay = -this.touchY;
+
     if (now.has("KeyA") || now.has("ArrowLeft")) ax -= 1;
     if (now.has("KeyD") || now.has("ArrowRight")) ax += 1;
     if (now.has("KeyW") || now.has("ArrowUp")) ay += 1;
     if (now.has("KeyS") || now.has("ArrowDown")) ay -= 1;
+
     const pads = navigator.getGamepads?.() ?? [];
     for (const pad of pads) {
       if (!pad) continue;
@@ -78,12 +107,31 @@ export class Input {
       if (pad.buttons[0]?.pressed && !this.prevPadA) this.interactQueued = true;
       this.prevPadA = !!pad.buttons[0]?.pressed;
     }
+
     const mag = Math.hypot(ax, ay);
-    if (mag > 1) { ax /= mag; ay /= mag; }
-    const interact = this.interactQueued || this.just.has("Space") || this.just.has("KeyE") || this.just.has("Enter");
+    if (mag > 1) {
+      ax /= mag;
+      ay /= mag;
+    }
+
+    const interact =
+      this.interactQueued ||
+      this.just.has("Space") ||
+      this.just.has("KeyE") ||
+      this.just.has("Enter");
     this.interactQueued = false;
+
     const mute = this.muteQueued || this.just.has("KeyM");
     this.muteQueued = false;
-    return { moveX: ax, moveY: ay, interact, mute, pause: this.just.has("Escape") };
+
+    return {
+      moveX: ax,
+      moveY: ay,
+      interact,
+      mute,
+      pause: this.just.has("Escape"),
+    };
   }
+
+  private prevPadA = false;
 }
